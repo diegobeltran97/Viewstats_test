@@ -9,6 +9,10 @@
 .searchContainer {
   position: relative;
   display: inline-block;
+
+  display: flex;
+  justify-content: center;
+  align-items: center;
 }
 .searchInput {
   padding: 14px;
@@ -20,9 +24,9 @@
   font-weight: 400;
   transition: opacity .4s ease;
   width: calc(100% - 50px);
-  margin-right: 50px;
 	border-radius: 100px;
 	font-family: 'Inter';
+ 
 }
 .searchIcon {
   position: absolute;
@@ -33,11 +37,10 @@
 }
 .clearIcon {
   position: absolute;
-  top: 25%;
-  right: 10%; /* Adjust based on your layout */
+  top: 35%;
+  right: 5%; /* Adjust based on your layout */
   cursor: pointer;
 }
-
 
 .button_search {
   width: 250px;
