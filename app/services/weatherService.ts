@@ -37,7 +37,7 @@ export interface WeatherForecast {
     };
   }
 
-export const fetchWeather = async (city: string): Promise<WeatherForecast> => {
+export const fetchWeather = async (city: string | string[]): Promise<WeatherForecast> => {
   // Convert city name to lat/lon
   const geoUrl = `${API_BASE_URL}/geo/1.0/direct?q=${city}&limit=1&appid=${API_KEY}`;
   const geoRes = await fetch(geoUrl);

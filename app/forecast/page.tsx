@@ -1,13 +1,14 @@
 "use client";
 import { useEffect, useState } from "react";
 import { fetchWeather, WeatherForecast } from "../services/weatherService";
-import { useSearchParams } from "next/navigation";
-import WeatherCard from "@/components/weatherCard/weatherCard";
+import {  useSearchParams } from 'next/navigation'
+import WeatherCard from "@/app/components/weatherCard/weatherCard";
 import styles from "./page.module.css";
+
 const ForecastPage = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
-  const searchParams = useSearchParams();
-  const search = searchParams.get("city");
+  const router = useSearchParams();
+  const search =  router.get('city'); // Access query parameters
 
 
   useEffect(() => {
@@ -46,7 +47,7 @@ const ForecastPage = () => {
     <div className={styles.main}>
      <div className={styles.container}>
       <h1 className="title">Weather Forecast:</h1>
-      <h2>{search?.toUpperCase()}</h2>
+      <h2>{search}</h2>
       
       <div className={styles.cardListContainer}>
         {listDayForecast()}
