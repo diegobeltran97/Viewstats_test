@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from 'next/navigation'
-import { getWeatherIcon, getWeatherIconColor } from "./components/weatherCard/weatherCard";
+import { getWeatherIcon, getWeatherIconColor } from "../components/weatherCard/weatherCard";
 
 const WeatherPage = () => {
   const [city, setCity] = useState("");

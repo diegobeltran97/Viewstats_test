@@ -1,6 +1,6 @@
 import React from "react";
 import styles from "./weatherCard.module.css";
-import { fetchWeather, WeatherForecast } from "../../services/weatherService";
+import { fetchWeather, WeatherForecast } from "../../app/services/weatherService";
 import {
   faCloudRain,
   faSnowflake,

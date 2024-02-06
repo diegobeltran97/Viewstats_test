@@ -2,7 +2,7 @@
 import { useEffect, useState } from "react";
 import { fetchWeather, WeatherForecast } from "../services/weatherService";
 import { useSearchParams } from "next/navigation";
-import WeatherCard from "@/app/components/weatherCard/weatherCard";
+import WeatherCard from "@/components/weatherCard/weatherCard";
 import styles from "./page.module.css";
 const ForecastPage = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
