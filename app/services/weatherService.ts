@@ -45,19 +45,20 @@ export const fetchWeather = async (city: string | string[]): Promise<WeatherFore
   const { lat, lon } = geoData[0];
 
   if (!geoRes.ok) {
-    throw new Error('Failed to fetch geo location data');
+    console.log("'Failed to fetch geo location data'")
+    
   }
 
   // Fetch 5-day forecast
   //https://api.openweathermap.org/data/3.0/onecall?lat={lat}&lon={lon}&exclude={part}&appid={API key}
   // api.openweathermap.org/data/2.5/forecast/daily?lat={lat}&lon={lon}&cnt={cnt}&appid={API key}
 
-  const weatherUrl = `${API_BASE_URL}/data/2.5/forecast?lat=${lat}&lon=${lon}&cn=${5}t&appid=${API_KEY}`;
+  const weatherUrl = `${API_BASE_URL}/data/2.5/forecast?lat=${lat}&lon=${lon}&appid=${API_KEY}`;
   const weatherRes = await fetch(weatherUrl);
   const weatherData: WeatherForecast = await weatherRes.json();
 
   if (!weatherRes.ok) {
-    throw new Error('Failed to fetch weather data');
+    console.log("'Failed to fetch wether data'")
   }
 
   return weatherData;
