@@ -1,0 +1,17 @@
+.cardListContainer {
+    display: flex;
+    align-items: stretch;
+    flex-wrap: wrap;
+}
+.main {
+ padding: 1rem;
+}
+
+
+.container {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    flex-direction: column;
+    height: 100%;
+}
