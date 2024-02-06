@@ -8,7 +8,7 @@ const ForecastPage = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
   const searchParams = useSearchParams();
   const search = searchParams.get("city");
-  let dayEvent = "";
+
 
   useEffect(() => {
     if (search) {
@@ -24,17 +24,23 @@ const ForecastPage = () => {
     }
   }, [search]);
 
-  if (!forecast) {
-    return <div>Loading...</div>;
-  }
+ 
 
-  const listDayForeCast = forecast.list.map((day, index) => {
-    if ( new Date(day.dt * 1000).toDateString() !== dayEvent  ) {
-        dayEvent = new Date(day.dt * 1000).toDateString(); 
-        return  <WeatherCard key={index} data={day} />; 
-    }
-    
-  });
+  const listDayForecast = () => {
+    let dayEvent = "";
+    return forecast ? (
+      forecast.list.map((day, index) => {
+        const dateString = new Date(day.dt * 1000).toDateString();
+        if (dateString !== dayEvent) {
+          dayEvent = dateString;
+          return <WeatherCard key={index} data={day} />;
+        }
+        return null;
+      })
+    ) : (
+      <p>No forecast available</p>
+    );
+  }; 
 
   return (
     <div className={styles.main}>
@@ -43,7 +49,7 @@ const ForecastPage = () => {
       <h2>{search?.toUpperCase()}</h2>
       
       <div className={styles.cardListContainer}>
-        {listDayForeCast}
+        {listDayForecast()}
       </div>      
     </div> 
     </div>
