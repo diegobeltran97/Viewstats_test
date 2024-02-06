@@ -1,16 +1,17 @@
 "use client";
-import { useEffect, useState } from "react";
+import { useEffect, useState, Suspense } from "react";
 import { fetchWeather, WeatherForecast } from "../services/weatherService";
-import {  useSearchParams } from 'next/navigation'
+import { useSearchParams } from "next/navigation";
 import WeatherCard from "@/app/components/weatherCard/weatherCard";
 import styles from "./page.module.css";
 
-const ForecastPage = () => {
+
+const Forecast = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
-  const router = useSearchParams();
-  const search =  router.get('city'); // Access query parameters
-
-
+  const searchParams = useSearchParams();
+  const search = searchParams.get("city"); // Access query parameters
+  // Rest of your component logic that depends on `search`
+  // ...
   useEffect(() => {
     if (search) {
       const loadForecast = async () => {
@@ -24,9 +25,6 @@ const ForecastPage = () => {
       loadForecast();
     }
   }, [search]);
-
- 
-
   const listDayForecast = () => {
     let dayEvent = "";
     return forecast ? (
@@ -41,20 +39,26 @@ const ForecastPage = () => {
     ) : (
       <p>No forecast available</p>
     );
-  }; 
+  };
 
   return (
+    listDayForecast()
+    // The part of your component that should be suspended
+  );
+};
+
+const ForecastPage = () => {
+  return (
     <div className={styles.main}>
-     <div className={styles.container}>
-      <h1 className="title">Weather Forecast:</h1>
-      <h2>{search}</h2>
-      
-      <div className={styles.cardListContainer}>
-        {listDayForecast()}
-      </div>      
-    </div> 
+      <div className={styles.container}>
+        <h1 className="title">Weather Forecast:</h1>
+        <div className={styles.cardListContainer}>
+          <Suspense fallback={<div>Loading...</div>}>
+            <Forecast></Forecast>
+          </Suspense>
+        </div>
+      </div>
     </div>
-    
   );
 };
 
