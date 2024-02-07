@@ -1,5 +1,7 @@
 const API_BASE_URL = "https://api.openweathermap.org";
-const API_KEY = "b44ba68305706ff5e481f32b5465ba4a";
+const API_KEY = process.env.API_KEY;
+
+
 
 // http://api.openweathermap.org/geo/1.0/direct?q={city name},{state code},{country code}&limit={limit}&appid={API key}
 // Define interfaces for the API responses
