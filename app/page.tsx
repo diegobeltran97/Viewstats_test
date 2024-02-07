@@ -12,7 +12,7 @@ import { getWeatherAttributes } from "./components/weatherCard/weatherCard"; // 
 // Component for the weather page.
 const WeatherPage = () => {
   // State for managing the city input value.
-  console.log(process.env.API_KEY);
+  
   const [city, setCity] = useState("");
   // Hook to manage routing.
   const router = useRouter();
