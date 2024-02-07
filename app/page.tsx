@@ -4,7 +4,7 @@ import styles from "./page.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faTimes } from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from 'next/navigation'
-import { getWeatherIcon, getWeatherIconColor } from "./components/weatherCard/weatherCard";
+import { getWeatherAttributes } from "./components/weatherCard/weatherCard";
 
 const WeatherPage = () => {
   const [city, setCity] = useState("");
@@ -12,11 +12,11 @@ const WeatherPage = () => {
 
   const conditions = ["Clear", "Rain", "Snow", "Clouds", "Haze", "Mist"];
   const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-  const icon = getWeatherIcon(randomCondition);
-  const color = getWeatherIconColor(randomCondition)
+  const {icon, color} =  getWeatherAttributes(randomCondition);
+  
   
 
-
+  
 
   const handleSearch = () => {
     // Navigate to the forecast page with the input as a query parameter

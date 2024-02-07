@@ -10,44 +10,53 @@ import {
 } from "@fortawesome/free-solid-svg-icons";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
+
 interface WeatherCardProps {
   data: WeatherForecast["list"][0]; // Use the type of a single item in the list
 }
 
-export const getWeatherIcon = (condition: any) => {
-  switch (condition) {
-    case "Clear":
-      return faSun;
-    case "Rain":
-      return faCloudRain;
-    case "Snow":
-      return faSnowflake;
-    case "Clouds":
-      return faCloud;
-    case "Haze":
-    case "Mist":
-      return faSmog;
-    default:
-      return faSun; // Default icon
-  }
-};
+export const getWeatherAttributes = (condition: any) => {
+  let attributes = {
+    background: "",
+    icon: faSun,
+    color: "#FFD700",
+  };
 
-export const getWeatherIconColor = (condition: any) => {
   switch (condition) {
     case "Clear":
-      return "#FFD700"; // Gold for sun
+      attributes.background = "/images/clear.png";
+      attributes.icon = faSun;
+      attributes.color = "#FFD700";
+      break;
     case "Rain":
-      return "#1E90FF"; // DodgerBlue for rain
+      attributes.background = "/images/rain.png";
+      attributes.icon = faCloudRain;
+      attributes.color = "#1E90FF";
+      break;
     case "Snow":
-      return "#FFFFFF"; // White for snow
+      attributes.background = "/images/snow.png";
+      attributes.icon = faSnowflake;
+      attributes.color = "#FFFFFF";
+      break;
     case "Clouds":
-      return "#808080"; // Grey for clouds
+      attributes.background = "/images/clouds.png";
+      attributes.icon = faCloud;
+      attributes.color = "#808080";
+      break;
     case "Haze":
     case "Mist":
-      return "#696969"; // DimGrey for haze/mist
+      attributes.background = "/images/haze.png";
+      attributes.icon = faSmog;
+      attributes.color = "#696969";
+      break;
     default:
-      return "#FFD700"; // Default color
+      attributes.background = "/images/clear.png"; // Default background
+      attributes.icon = faSun; // Default icon
+      attributes.color = "#FFD700"; // Default color
+      break;
   }
+
+  return attributes;
 };
 
 const WeatherCard: React.FC<WeatherCardProps> = ({ data }) => {
@@ -60,33 +69,52 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ data }) => {
   const weatherDescription =
     data.weather.length > 0 ? data.weather[0].description : "N/A";
 
-  const icon = getWeatherIcon(weatherMain);
-  const color = getWeatherIconColor(weatherMain)
+  const { icon, color, background } = getWeatherAttributes(weatherMain);
 
-  const isToday = new Date(data.dt * 1000).toDateString() == new Date().toDateString()
+  const isToday =
+    new Date(data.dt * 1000).toDateString() == new Date().toDateString();
 
   return (
-    <div className={styles.weatherCard} style={{ width:  isToday ? '100%': 'auto'   }} >
-      <div className={styles.weatherCardTitle}>
-        {  !isToday ? new Date(data.dt * 1000).toDateString() : 'Today'}
-      </div>
-      <div className={styles.weatherCardHeader}>
-        <span className={styles.weatherCardHeaderTemperature}>{temp.toFixed(2)}°C</span>
-        <span>
-          <FontAwesomeIcon icon={icon} color={color} size="2x" />
-        </span>
-      </div>
+    <div
+      className={styles.weatherCard}
+      style={{
+        width: isToday ? "100%" : "auto",
+        border: isToday ? "none" : "auto",
+        backgroundColor: isToday ? "#ecf0f1" : "auto",
+        boxShadow: isToday ? "none" : "auto",
+
+      }}
+    >
       <div className={styles.weatherCardDescription}>
-        <span style={{ fontSize: "14px", marginRight: "10px" }}>
-          Min: {tempMin.toFixed(2)}°C
-        </span>
-        <span style={{ fontSize: "14px" }}>Max: {tempMax.toFixed(2)}°C</span>
+        <div className={styles.weatherCardTitle}>
+          {!isToday ? new Date(data.dt * 1000).toDateString() : "Today"}
+        </div>
+        <div className={styles.weatherCardHeader}>
+          <span className={styles.weatherCardHeaderTemperature}>
+            {temp.toFixed(2)}°C
+          </span>
+        </div>
+
+        <div className="column">
+          <span style={{ fontSize: "14px", fontWeight: "500" }}>
+            {weatherMain}
+          </span>{" "}
+          - <span style={{ fontSize: "14px" }}>{weatherDescription}</span>
+        </div>
+        <div className="column">
+          <span className={styles.weatherCardTitle}>Min:</span>
+          <span>{tempMin.toFixed(2)}°C</span>
+
+          <span className={styles.weatherCardTitle}>Max</span>
+          <span>{tempMax.toFixed(2)}°C</span>
+        </div>
       </div>
+
       <div>
-        <span style={{ fontSize: "14px", fontWeight: "500" }}>
-          {weatherMain}
-        </span>{" "}
-        - <span style={{ fontSize: "14px" }}>{weatherDescription}</span>
+        <img
+          src={background}
+          style={{ width: isToday ? "10rem" : "40px" }}
+        ></img>
       </div>
     </div>
   );
