@@ -5,7 +5,7 @@ import { useSearchParams } from "next/navigation";
 import WeatherCard from "@/app/components/weatherCard/weatherCard";
 import styles from "./page.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft , faSadCry , faCloud} from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft , faPooStorm , faCloud} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 // Import useRouter
@@ -37,7 +37,7 @@ const Forecast = () => {
 
   const listDayForecast = () => {
     if (loading) {
-      return <div><FontAwesomeIcon icon={faCloud} />loading...</div>; // Display loading indicator
+      return <div>loading..... <FontAwesomeIcon icon={faCloud} color="#1E90FF"></FontAwesomeIcon> </div>; // Display loading indicator
     }
     let dayEvent = "";
     return forecast  ? (
@@ -54,7 +54,7 @@ const Forecast = () => {
           return null;
         })}
       </>
-    ) : !loading && <div>There is no forecast for the city <FontAwesomeIcon icon={faSadCry} fontSize="2rem" /></div>;
+    ) : !loading && <div>There is no forecast for the city...   <FontAwesomeIcon icon={faPooStorm}  color="#1E90FF" /></div>;
   };
 
   return (
