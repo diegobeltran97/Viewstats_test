@@ -8,13 +8,13 @@ import {
   faCloud,
   faSmog,
 } from "@fortawesome/free-solid-svg-icons";
-import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 
-
+// TypeScript interface defining the props the WeatherCard component expects.
 interface WeatherCardProps {
-  data: WeatherForecast["list"][0]; // Use the type of a single item in the list
+  data: WeatherForecast["list"][0]; // Specifies that 'data' should be an item from the WeatherForecast list array.
 }
 
+// Function to map a weather condition to its visual representation attributes.
 export const getWeatherAttributes = (condition: any) => {
   let attributes = {
     background: "",
@@ -69,10 +69,12 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ data }) => {
   const weatherDescription =
     data.weather.length > 0 ? data.weather[0].description : "N/A";
 
+  // Retrieve visual attributes for the weather condition.
   const { icon, color, background } = getWeatherAttributes(weatherMain);
 
-  const isToday =
-    new Date(data.dt * 1000).toDateString() == new Date().toDateString();
+  // Check if the date of the weather data is today's date for special styling.
+  const isToday = new Date(data.dt * 1000).toDateString() === new Date().toDateString();
+
 
   return (
     <div
@@ -82,7 +84,6 @@ const WeatherCard: React.FC<WeatherCardProps> = ({ data }) => {
         border: isToday ? "none" : "auto",
         backgroundColor: isToday ? "#ecf0f1" : "auto",
         boxShadow: isToday ? "none" : "auto",
-
       }}
     >
       <div className={styles.weatherCardDescription}>
