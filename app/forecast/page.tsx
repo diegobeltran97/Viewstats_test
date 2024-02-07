@@ -5,25 +5,30 @@ import { useSearchParams } from "next/navigation";
 import WeatherCard from "@/app/components/weatherCard/weatherCard";
 import styles from "./page.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
-import { faArrowLeft } from "@fortawesome/free-solid-svg-icons";
+import { faArrowLeft , faSadCry , faCloud} from "@fortawesome/free-solid-svg-icons";
 import { useRouter } from "next/navigation";
 
 // Import useRouter
 
 const Forecast = () => {
   const [forecast, setForecast] = useState<WeatherForecast | null>(null);
+  const [loading, setLoading] = useState(false); // Loading state
   const searchParams = useSearchParams();
-  const search = searchParams.get("city"); // Access query parameters
-  // Rest of your component logic that depends on `search`
-  // ...
+  const search = searchParams.get("city");
+
   useEffect(() => {
     if (search) {
+      setLoading(true); // Start loading
       const loadForecast = async () => {
-        const data = await fetchWeather(search);
-        console.log("data", data);
-
-        if (data) {
-          setForecast(data); // Take the first 5 days of forecast
+        try {
+          const data = await fetchWeather(search);
+          if (data) {
+            setForecast(data); // Update the forecast state
+          }
+        } catch (error) {
+          console.error("Failed to fetch weather data:", error);
+        } finally {
+          setLoading(false); // Stop loading regardless of outcome
         }
       };
       loadForecast();
@@ -31,8 +36,11 @@ const Forecast = () => {
   }, [search]);
 
   const listDayForecast = () => {
+    if (loading) {
+      return <div><FontAwesomeIcon icon={faCloud} />loading...</div>; // Display loading indicator
+    }
     let dayEvent = "";
-    return forecast &&  (
+    return forecast  ? (
       <>
         <h1 className="title" style={{ width: "100%" }}>
           {search?.toUpperCase()}
@@ -46,12 +54,11 @@ const Forecast = () => {
           return null;
         })}
       </>
-    ) 
+    ) : !loading && <div>There is no forecast for the city <FontAwesomeIcon icon={faSadCry} fontSize="2rem" /></div>;
   };
+
   return (
     <>{listDayForecast()}</>
-
-
   );
 };
 
@@ -62,7 +69,7 @@ const ForecastPage = () => {
       <div className={styles.container}>
       
         <div className={styles.backButton}>
-          <button  onClick={() => router.back()}>
+          <button  onClick={() => router.push('/')}>
             <FontAwesomeIcon icon={faArrowLeft} fontSize="2rem" /> 
           </button>
         </div>

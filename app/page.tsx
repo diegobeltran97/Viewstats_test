@@ -3,7 +3,7 @@ import { useEffect, useState } from "react";
 import styles from "./page.module.css";
 import { FontAwesomeIcon } from "@fortawesome/react-fontawesome";
 import { faMagnifyingGlass, faTimes } from "@fortawesome/free-solid-svg-icons";
-import { useRouter } from 'next/navigation'
+import { useRouter } from "next/navigation";
 import { getWeatherAttributes } from "./components/weatherCard/weatherCard";
 
 const WeatherPage = () => {
@@ -11,12 +11,9 @@ const WeatherPage = () => {
   const router = useRouter();
 
   const conditions = ["Clear", "Rain", "Snow", "Clouds", "Haze", "Mist"];
-  const randomCondition = conditions[Math.floor(Math.random() * conditions.length)];
-  const {icon, color} =  getWeatherAttributes(randomCondition);
-  
-  
-
-  
+  const randomCondition =
+    conditions[Math.floor(Math.random() * conditions.length)];
+  const { icon, color } = getWeatherAttributes(randomCondition);
 
   const handleSearch = () => {
     // Navigate to the forecast page with the input as a query parameter
@@ -24,13 +21,13 @@ const WeatherPage = () => {
   };
 
   const clearInput = () => {
-    setCity('');
+    setCity("");
   };
 
   return (
     <div className={styles.main}>
       <div>
-      <FontAwesomeIcon icon={icon} color={color} size="2x" />
+        <FontAwesomeIcon icon={icon} color={color} size="2x" />
       </div>
       <h1 className="title">The Weather App</h1>
 
@@ -42,18 +39,18 @@ const WeatherPage = () => {
           onChange={(e) => setCity(e.target.value)}
           placeholder="Enter city name"
           onKeyDown={(e) => {
-            if (e.key === 'Enter') {
+            if (e.key === "Enter") {
               handleSearch();
             }
           }}
         />
-         {city && (
-        <FontAwesomeIcon
-          icon={faTimes}
-          className={styles.clearIcon}
-          onClick={clearInput}
-        />
-      )}
+        {city && (
+          <FontAwesomeIcon
+            icon={faTimes}
+            className={styles.clearIcon}
+            onClick={clearInput}
+          />
+        )}
         <FontAwesomeIcon
           icon={faMagnifyingGlass}
           className={styles.searchIcon}
@@ -63,7 +60,6 @@ const WeatherPage = () => {
       <button className={styles.button_search} onClick={handleSearch}>
         Search
       </button>
-     
     </div>
   );
 };
